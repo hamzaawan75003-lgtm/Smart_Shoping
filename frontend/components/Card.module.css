@@ -1,0 +1,100 @@
+.card {
+  width: 280px;
+  height: 400px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  perspective: 2500px;
+  margin: 40px auto;
+  cursor: pointer;
+}
+
+.wrapper {
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+}
+
+.coverImage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.5s;
+}
+
+.card:hover .wrapper {
+  transform: rotateX(25deg) translateY(-5%) translateZ(0);
+  box-shadow: 0 45px 40px -10px rgba(0, 0, 0, 0.8);
+}
+
+/* The clipping plane for the character */
+.characterContainer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+  overflow: visible; /* Allow head to pop out top */
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+/* We use a pseudo-element or another wrapper if we want to clip only the bottom */
+/* But the Dark Rider effect usually clips the character at the bottom of the card */
+.character {
+  position: relative;
+  width: 100%;
+  height: 120%; /* Taller than card to pop out */
+  opacity: 0;
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  transform: translate3d(0, 15%, 0);
+  z-index: 3;
+}
+
+.card:hover .character {
+  opacity: 1;
+  transform: translate3d(0, -12%, 120px);
+}
+
+.title {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  z-index: 4;
+  color: white;
+  text-align: center;
+  font-family: var(--font-playfair);
+  font-weight: 700;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 0 5px 15px rgba(0,0,0,0.8);
+  pointer-events: none;
+}
+
+.card:hover .title {
+  transform: translate3d(0, -40px, 150px);
+}
+
+/* Overlay to darken background on hover */
+.wrapper::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 60%);
+  opacity: 0.6;
+  transition: opacity 0.5s;
+}
+
+.card:hover .wrapper::after {
+  opacity: 0.9;
+}
